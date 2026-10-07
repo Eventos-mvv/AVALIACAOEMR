@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Respostas da Avaliação</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--vinho:#7a0f23;--vinho-2:#5a0a19;--vinho-3:#9b2236;--tinta:#2a0d12;--suave:rgba(42,13,18,.6);--linha:rgba(122,16,35,.16);--titulo:"Bebas Neue",Impact,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;font-family:Poppins,system-ui,sans-serif;font-size:15px;line-height:1.5;color:var(--tinta);background:linear-gradient(180deg,#fff 0%,#fff 12%,#f7e6e8 100%) fixed}
+h1{margin:0;font-family:var(--titulo);font-weight:400;font-size:clamp(40px,8vw,60px);line-height:1;color:var(--vinho);letter-spacing:.01em}
+.wrap{max-width:1200px;margin:0 auto;padding:28px 18px 60px}
+.hidden{display:none!important}
+button{font:inherit;cursor:pointer}
+.btn{border:0;border-radius:6px;padding:11px 18px;background:var(--vinho);color:#fff;font-weight:600;font-size:14px;letter-spacing:.04em}
+.btn:hover{background:var(--vinho-2)}
+.btn:disabled{opacity:.5;cursor:default}
+.btn.ghost{background:#fff;color:var(--vinho);border:1.5px solid var(--vinho)}
+.btn.ghost:hover{background:var(--vinho);color:#fff}
+
+/* login */
+.login{max-width:380px;margin:12vh auto 0;background:#fff;border:1px solid var(--linha);border-radius:10px;padding:28px 24px;box-shadow:0 4px 18px rgba(60,10,20,.1)}
+.login h1{font-size:44px;margin-bottom:6px}
+.login p{margin:0 0 18px;color:var(--suave);font-size:14px}
+label{display:block;font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--vinho-3);margin:12px 0 4px}
+input[type=email],input[type=password],input[type=search],select{width:100%;padding:11px 14px;border:1px solid rgba(122,16,35,.4);border-radius:8px;background:#fff;color:var(--tinta);font:inherit}
+input:focus,select:focus{outline:0;border-color:var(--vinho);box-shadow:0 0 0 1px var(--vinho)}
+.login .btn{width:100%;margin-top:18px}
+.err{margin-top:12px;color:#a1121f;font-size:14px;min-height:20px}
+
+/* topo */
+.top{display:flex;flex-wrap:wrap;gap:12px 18px;align-items:flex-end;justify-content:space-between;margin-bottom:22px}
+.sub{margin:6px 0 0;color:var(--vinho-3);font-family:var(--titulo);font-size:20px;letter-spacing:.12em}
+.tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.tools select,.tools input[type=search]{width:auto;min-width:190px}
+
+/* resumo */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin-bottom:22px}
+.card{background:#fff;border:1px solid var(--linha);border-radius:10px;padding:14px 16px;box-shadow:0 1px 6px rgba(60,10,20,.07)}
+.card h3{margin:0 0 8px;font-size:12px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--vinho-3)}
+.total{font-family:var(--titulo);font-size:56px;line-height:1;color:var(--vinho)}
+.dist{display:flex;flex-direction:column;gap:5px}
+.dist div{display:grid;grid-template-columns:78px 1fr 24px;gap:8px;align-items:center;font-size:13px}
+.dist .bar{height:8px;border-radius:4px;background:rgba(122,16,35,.1);overflow:hidden}
+.dist .bar i{display:block;height:100%;background:var(--vinho);border-radius:4px}
+.dist b{text-align:right;font-weight:600}
+
+/* gráficos */
+.charts{display:grid;grid-template-columns:1fr 2fr;gap:12px;margin-bottom:22px}
+.charts .full{grid-column:1/-1}
+.cv{position:relative;height:260px}
+@media(max-width:760px){.charts{grid-template-columns:1fr}}
+
+/* tabela */
+.box{background:#fff;border:1px solid var(--linha);border-radius:10px;overflow:auto;box-shadow:0 1px 6px rgba(60,10,20,.07)}
+table{border-collapse:collapse;width:100%;min-width:980px}
+th,td{padding:10px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--linha);font-size:14px}
+th{position:sticky;top:0;background:var(--vinho);color:#fff;font-weight:500;font-size:12px;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
+td.txt{min-width:200px;max-width:320px;overflow-wrap:anywhere;white-space:pre-line}
+td.nm{font-weight:600;white-space:nowrap}
+td.dt{white-space:nowrap;color:var(--suave)}
+tr:hover td{background:#fbf2f3}
+.vazio{padding:40px 16px;text-align:center;color:var(--suave)}
+.pill{display:inline-block;padding:2px 10px;border-radius:99px;font-size:12.5px;font-weight:500;background:rgba(122,16,35,.08);color:var(--vinho);white-space:nowrap}
+.nota{margin-top:14px;font-size:13px;color:var(--suave)}
+.del{background:none;border:0;padding:2px 6px;font-size:16px;line-height:1;color:var(--suave);opacity:.3;border-radius:4px}
+tr:hover .del{opacity:.9}
+.del:hover{color:#a1121f;background:rgba(161,18,31,.08);opacity:1}
+.del:disabled{opacity:.2;cursor:default}
+@media(hover:none){.del{opacity:.6}}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<main class="login" id="login">
+  <h1>Respostas</h1>
+  <p>Acesso restrito à coordenação.</p>
+  <form id="fLogin">
+    <label for="em">E-mail</label>
+    <input type="email" id="em" autocomplete="username" required>
+    <label for="pw">Senha</label>
+    <input type="password" id="pw" autocomplete="current-password" required>
+    <button class="btn" id="bLogin" type="submit">Entrar</button>
+    <div class="err" id="eLogin" role="alert"></div>
+  </form>
+</main>
+
+<!-- PAINEL -->
+<div class="wrap hidden" id="painel">
+  <div class="top">
+    <div>
+      <h1>Respostas da Avaliação</h1>
+      <p class="sub" id="subt">Carregando…</p>
+    </div>
+    <div class="tools">
+      <select id="selEvento" aria-label="Evento"></select>
+      <input type="search" id="busca" placeholder="Buscar nome ou texto…" aria-label="Buscar">
+      <button class="btn ghost" id="bAtualizar" type="button">Atualizar</button>
+      <button class="btn" id="bExcel" type="button">Baixar Excel</button>
+      <button class="btn ghost" id="bSair" type="button">Sair</button>
+    </div>
+  </div>
+
+  <section class="cards" id="cards"></section>
+
+  <section class="charts">
+    <div class="card"><h3>Avaliação geral</h3><div class="cv"><canvas id="gGeral"></canvas></div></div>
+    <div class="card"><h3>Notas por quesito</h3><div class="cv"><canvas id="gQuesitos"></canvas></div></div>
+    <div class="card full"><h3>Respostas por dia</h3><div class="cv"><canvas id="gDias"></canvas></div></div>
+  </section>
+
+  <div class="box">
+    <table>
+      <thead>
+        <tr>
+          <th>Data</th><th>Nome</th><th>Local</th><th>Limpeza</th><th>Alimentação</th><th>Assuntos</th>
+          <th>Faltou assunto</th><th>Chamou atenção</th><th>Melhorar</th><th>Sugestão</th><th></th>
+        </tr>
+      </thead>
+      <tbody id="tb"></tbody>
+    </table>
+    <div class="vazio hidden" id="vazio">Nenhuma resposta encontrada.</div>
+  </div>
+  <p class="nota" id="nota"></p>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+const EVENTO_PADRAO = 'treinamento-novas-diretorias-emr';
+
+firebase.initializeApp({
+  apiKey: "AIzaSyDlDOUv33oXuks6a6xuu9EIYvrV7y9mfj0",
+  authDomain: "avaliacaoemr.firebaseapp.com",
+  projectId: "avaliacaoemr",
+  storageBucket: "avaliacaoemr.firebasestorage.app",
+  messagingSenderId: "916159711953",
+  appId: "1:916159711953:web:81e5f34cc98c3b192813f0"
+});
+const auth = firebase.auth(), db = firebase.firestore();
+const $ = id => document.getElementById(id);
+
+const COLS = [
+  ['Data/Hora', r => fmtData(r.criadoEm)],
+  ['Nome', r => r.nome], ['Local', r => r.local], ['Limpeza', r => r.limpeza],
+  ['Alimentação', r => r.alimentacao], ['Assuntos', r => r.assuntos],
+  ['Faltou assunto', r => r.assuntoFaltou || 'Não'],
+  ['Chamou atenção', r => r.chamouAtencao], ['Melhorar', r => r.melhorar],
+  ['Sugestão', r => r.sugestao || 'Não']
+];
+const CATS = [['local','Local'],['limpeza','Limpeza'],['alimentacao','Alimentação'],['assuntos','Assuntos']];
+const OPCOES = ['Excelente','Muito Bom','Bom','Regular'];
+
+let todas = [], visiveis = [];
+
+function fmtData(ts){
+  if(!ts || !ts.toDate) return '';
+  return ts.toDate().toLocaleString('pt-BR', {day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit'});
+}
+
+/* ---------- login ---------- */
+$('fLogin').addEventListener('submit', async e => {
+  e.preventDefault(); $('eLogin').textContent = ''; $('bLogin').disabled = true;
+  try{ await auth.signInWithEmailAndPassword($('em').value.trim(), $('pw').value); }
+  catch(err){
+    const m = {'auth/invalid-credential':'E-mail ou senha incorretos.','auth/wrong-password':'E-mail ou senha incorretos.','auth/user-not-found':'E-mail ou senha incorretos.','auth/invalid-email':'E-mail inválido.','auth/too-many-requests':'Muitas tentativas. Aguarde um pouco.','auth/operation-not-allowed':'Login por e-mail/senha não está ativado no Firebase.'};
+    $('eLogin').textContent = m[err.code] || 'Não foi possível entrar (' + (err.code || 'erro') + ').';
+  }
+  $('bLogin').disabled = false;
+});
+$('bSair').onclick = () => auth.signOut();
+
+auth.onAuthStateChanged(u => {
+  $('login').classList.toggle('hidden', !!u);
+  $('painel').classList.toggle('hidden', !u);
+  if(u) carregar(); else { todas = []; $('pw').value = ''; }
+});
+
+/* ---------- dados ---------- */
+async function carregar(){
+  $('subt').textContent = 'Carregando…'; $('bAtualizar').disabled = true;
+  try{
+    const snap = await db.collection('avaliacoes').get();
+    todas = snap.docs.map(d => ({id: d.id, ...d.data()}));
+    todas.sort((a, b) => (b.criadoEm ? b.criadoEm.toMillis() : 0) - (a.criadoEm ? a.criadoEm.toMillis() : 0));
+    montarEventos(); render();
+    $('nota').textContent = '';
+  }catch(err){
+    console.error(err);
+    todas = []; render();
+    $('subt').textContent = 'Erro ao carregar';
+    $('nota').textContent = err.code === 'permission-denied'
+      ? 'Sem permissão para ler as respostas. Libere a leitura da coleção "avaliacoes" para usuários logados nas regras do Firestore.'
+      : 'Não consegui carregar agora. Verifique a internet e clique em Atualizar.';
+  }
+  $('bAtualizar').disabled = false;
+}
+
+function montarEventos(){
+  const sel = $('selEvento'), atual = sel.value;
+  const ids = [...new Set(todas.map(r => r.evento).filter(Boolean))];
+  if(!ids.includes(EVENTO_PADRAO)) ids.unshift(EVENTO_PADRAO);
+  sel.innerHTML = '';
+  ids.forEach(id => { const o = document.createElement('option'); o.value = id; o.textContent = id; sel.appendChild(o); });
+  const t = document.createElement('option'); t.value = ''; t.textContent = 'Todos os eventos'; sel.appendChild(t);
+  sel.value = sel.dataset.init ? atual : EVENTO_PADRAO;
+  sel.dataset.init = '1';
+}
+
+function filtrar(){
+  const ev = $('selEvento').value, q = $('busca').value.trim().toLowerCase();
+  return todas.filter(r => (!ev || r.evento === ev) &&
+    (!q || COLS.some(([, f]) => String(f(r) || '').toLowerCase().includes(q))));
+}
+
+/* ---------- tela ---------- */
+function render(){
+  visiveis = filtrar();
+  $('subt').textContent = visiveis.length + (visiveis.length === 1 ? ' resposta' : ' respostas');
+  $('bExcel').disabled = !visiveis.length;
+
+  const cards = $('cards'); cards.innerHTML = '';
+  const t = document.createElement('div'); t.className = 'card';
+  t.innerHTML = '<h3>Total de respostas</h3><div class="total"></div>';
+  t.querySelector('.total').textContent = visiveis.length; cards.appendChild(t);
+  CATS.forEach(([k, lab]) => {
+    const c = document.createElement('div'); c.className = 'card';
+    const h = document.createElement('h3'); h.textContent = lab; c.appendChild(h);
+    const dist = document.createElement('div'); dist.className = 'dist';
+    OPCOES.forEach(o => {
+      const n = visiveis.filter(r => r[k] === o).length;
+      const pct = visiveis.length ? Math.round(n / visiveis.length * 100) : 0;
+      const row = document.createElement('div');
+      const a = document.createElement('span'); a.textContent = o;
+      const bar = document.createElement('span'); bar.className = 'bar';
+      const i = document.createElement('i'); i.style.width = pct + '%'; bar.appendChild(i);
+      const b = document.createElement('b'); b.textContent = n;
+      row.append(a, bar, b); dist.appendChild(row);
+    });
+    c.appendChild(dist); cards.appendChild(c);
+  });
+
+  const tb = $('tb'); tb.innerHTML = '';
+  visiveis.forEach(r => {
+    const tr = document.createElement('tr');
+    COLS.forEach(([, f], i) => {
+      const td = document.createElement('td'), v = f(r) || '';
+      if(i >= 2 && i <= 5){ const p = document.createElement('span'); p.className = 'pill'; p.textContent = v; td.appendChild(p); }
+      else { td.className = i === 0 ? 'dt' : i === 1 ? 'nm' : 'txt'; td.textContent = v; }
+      tr.appendChild(td);
+    });
+    const tdx = document.createElement('td'), bx = document.createElement('button');
+    bx.type = 'button'; bx.className = 'del'; bx.textContent = '\u2715';
+    bx.title = 'Apagar esta resposta'; bx.setAttribute('aria-label', 'Apagar resposta de ' + (r.nome || 'sem nome'));
+    bx.onclick = () => apagar(r, bx);
+    tdx.appendChild(bx); tr.appendChild(tdx);
+    tb.appendChild(tr);
+  });
+  $('vazio').classList.toggle('hidden', !!visiveis.length);
+  renderGraficos();
+}
+
+/* ---------- gráficos ---------- */
+const gr = {};
+function grafico(id, cfg){
+  if(gr[id]) gr[id].destroy();
+  gr[id] = new Chart($(id), cfg);
+}
+function renderGraficos(){
+  if(typeof Chart === 'undefined') return;
+  Chart.defaults.font.family = 'Poppins, system-ui, sans-serif';
+  const cores = ['#7a0f23', '#c0566a', '#e3a6b0', '#9a9a9a'];
+  const cnt = (k, o) => visiveis.filter(r => r[k] === o).length;
+  const leg = {legend: {position: 'bottom'}};
+  const semDec = {beginAtZero: true, ticks: {precision: 0}};
+
+  grafico('gGeral', {
+    type: 'doughnut',
+    data: {labels: OPCOES, datasets: [{data: OPCOES.map(o => CATS.reduce((s, [k]) => s + cnt(k, o), 0)), backgroundColor: cores, borderWidth: 2}]},
+    options: {maintainAspectRatio: false, plugins: leg}
+  });
+
+  grafico('gQuesitos', {
+    type: 'bar',
+    data: {labels: CATS.map(c => c[1]), datasets: OPCOES.map((o, i) => ({label: o, data: CATS.map(([k]) => cnt(k, o)), backgroundColor: cores[i]}))},
+    options: {maintainAspectRatio: false, plugins: leg, scales: {x: {stacked: true}, y: {stacked: true, ...semDec}}}
+  });
+
+  const dias = {};
+  [...visiveis].reverse().forEach(r => {
+    if(!r.criadoEm) return;
+    const d = r.criadoEm.toDate().toLocaleDateString('pt-BR', {day: '2-digit', month: '2-digit'});
+    dias[d] = (dias[d] || 0) + 1;
+  });
+  grafico('gDias', {
+    type: 'line',
+    data: {labels: Object.keys(dias), datasets: [{label: 'Respostas', data: Object.values(dias), borderColor: '#7a0f23', backgroundColor: 'rgba(122,16,35,.12)', fill: true, tension: .3}]},
+    options: {maintainAspectRatio: false, plugins: {legend: {display: false}}, scales: {y: semDec}}
+  });
+}
+
+/* ---------- apagar resposta ---------- */
+async function apagar(r, btn){
+  if(!confirm('Apagar a resposta de "' + (r.nome || 'sem nome') + '"?\nIsso n\u00e3o pode ser desfeito.')) return;
+  btn.disabled = true;
+  try{
+    await db.collection('avaliacoes').doc(r.id).delete();
+    todas = todas.filter(x => x.id !== r.id);
+    render();
+  }catch(err){
+    console.error(err); btn.disabled = false;
+    alert(err.code === 'permission-denied'
+      ? 'Sem permiss\u00e3o para apagar. Atualize as regras do Firestore (allow delete para os administradores).'
+      : 'N\u00e3o consegui apagar agora. Tente de novo.');
+  }
+}
+
+$('selEvento').onchange = render;
+$('busca').addEventListener('input', render);
+$('bAtualizar').onclick = carregar;
+
+/* ---------- Excel ---------- */
+$('bExcel').onclick = () => {
+  if(!visiveis.length) return;
+  const header = COLS.map(([lab]) => lab);
+  const rows = visiveis.map(r => COLS.map(([, f]) => f(r) || ''));
+  const ws = XLSX.utils.aoa_to_sheet([header, ...rows]);
+  ws['!cols'] = [18, 30, 12, 12, 13, 12, 16, 45, 45, 45].map(w => ({wch: w}));
+  ws['!freeze'] = {xSplit: 0, ySplit: 1};
+
+  /* aba com o resumo das notas */
+  const resumo = [['Quesito', ...OPCOES, 'Total']];
+  CATS.forEach(([k, lab]) => {
+    const cont = OPCOES.map(o => visiveis.filter(r => r[k] === o).length);
+    resumo.push([lab, ...cont, cont.reduce((a, b) => a + b, 0)]);
+  });
+  const ws2 = XLSX.utils.aoa_to_sheet(resumo);
+  ws2['!cols'] = [16, 12, 12, 8, 10, 8].map(w => ({wch: w}));
+
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'Respostas');
+  XLSX.utils.book_append_sheet(wb, ws2, 'Resumo');
+  const ev = $('selEvento').value || 'todos-os-eventos';
+  XLSX.writeFile(wb, 'avaliacao-' + ev + '-' + new Date().toISOString().slice(0, 10) + '.xlsx');
+};
+</script>
+</body>
+</html>
